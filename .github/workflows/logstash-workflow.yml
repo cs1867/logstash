@@ -1,6 +1,6 @@
 name: logstash-workflow
 
-on:
+on: 
 
   workflow_dispatch:
     inputs:
