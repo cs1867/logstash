@@ -67,31 +67,31 @@ jobs:
             echo "Dependencies:"
             cat deps.txt
 
-        - name: Download artifacts
-          run: |
-            mkdir -p artifacts
-            while IFS= read -r repo; do
-              echo "Downloading artifact for $repo"
-              run_id=$(echo  "$BUILD_VARS_JSON" | jq -r ".buildids | .[\"$repo\"]")
-              echo "rund id $run_id"
-              gh run download $run_id --repo cs1867/$repo -D artifacts/$repo --name "$repo-${{ github.event.inputs.OS }}"
-              artifact_path="artifacts/$repo"
-              echo "list artifact path"
-              ls -al "$artifact_path"
-              mkdir -p artifacts/RPMS
-              echo "copy to the artifacts RPM dir"
-              cp "$artifact_path"/RPMS/*.rpm artifacts/RPMS
-            done < deps.txt
-          env:
-            GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
+       # - name: Download artifacts
+       #   run: |
+       #     mkdir -p artifacts
+       #     while IFS= read -r repo; do
+       #       echo "Downloading artifact for $repo"
+       #       run_id=$(echo  "$BUILD_VARS_JSON" | jq -r ".buildids | .[\"$repo\"]")
+       #       echo "rund id $run_id"
+       #       gh run download $run_id --repo cs1867/$repo -D artifacts/$repo --name "$repo-${{ github.event.inputs.OS }}"
+       #       artifact_path="artifacts/$repo"
+       #       echo "list artifact path"
+       #       ls -al "$artifact_path"
+       #       mkdir -p artifacts/RPMS
+       #       echo "copy to the artifacts RPM dir"
+       #       cp "$artifact_path"/RPMS/*.rpm artifacts/RPMS
+        #    done < deps.txt
+       #   env:
+       #     GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
 
-        - name: run docker oneshot builder and github-actions-workflow.sh
-          run: |
-            if [ "${{ github.event.inputs.OS }}" == 'ol8' ] || [ "${{ github.event.inputs.OS }}" == 'el9' ]; then
-              curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run github-el-workflow.sh . '${{ github.event.inputs.OS }}'
-              elif [ "${{ github.event.inputs.OS }}" == 'd11' ] || [ "${{ github.event.inputs.OS }}" == 'd12' ]; then
-              curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run github-db-workflow.sh . '${{ github.event.inputs.OS }}'
-            fi
+       # - name: run docker oneshot builder and github-actions-workflow.sh
+       #   run: |
+       #     if [ "${{ github.event.inputs.OS }}" == 'ol8' ] || [ "${{ github.event.inputs.OS }}" == 'el9' ]; then
+       #       curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run github-el-workflow.sh . '${{ github.event.inputs.OS }}'
+       #       elif [ "${{ github.event.inputs.OS }}" == 'd11' ] || [ "${{ github.event.inputs.OS }}" == 'd12' ]; then
+       #       curl -s https://raw.githubusercontent.com/perfsonar/docker-oneshot-builder/main/build | sh -s - --run github-db-workflow.sh . '${{ github.event.inputs.OS }}'
+       #     fi
 
         - uses: actions/upload-artifact@v3
           with:
