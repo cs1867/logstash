@@ -165,8 +165,8 @@ jobs:
                workflow_id: '${{ env.NEXTREPO }}-workflow.yml',
                ref: 'github-workflow',
               inputs: {
-                 OS: '${{ matrix.os }}',
+                 OS: '${{ github.event.inputs.OS }}',
                  BUILD_VARS_JSON: '${{ env.BUILD_VARS_JSON}}',
-                 BUILD_BRANCH: '${{ env.BUILD_BRANCH }}'
+                 BUILD_BRANCH: '${{ github.event.inputs.BUILD_BRANCH }}'
                }
              })
