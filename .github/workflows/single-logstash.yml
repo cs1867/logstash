@@ -32,6 +32,11 @@ jobs:
               cp project/toolbox/workflows/github_u20_workflow.sh .
               ;;
           esac
+
+      - name: show run id
+        run: |
+          echo "${{ github.run_id }}"
+          
       # Download artifacts
       - name: Download artifacts
         run: |
