@@ -7,7 +7,7 @@ on:
 env: 
   BUILD_OS: el9 
 
-jobs:
+jobs: 
   logstash-daemon:
     runs-on: ubuntu-latest
 
