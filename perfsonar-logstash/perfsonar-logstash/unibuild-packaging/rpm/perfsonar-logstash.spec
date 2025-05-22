@@ -78,7 +78,7 @@ fi
 #Use globs so don't dupicate config files above
 %{pipeline_base}/0[2-9]-*.conf
 #Add below when the day comes we have something that doesn't start with 0 or 9
-#%{pipeline_base}/[1-8][0-9]-*.conf
+#{pipeline_base}/[1-8][0-9]-*.conf
 #{pipeline_base}/9[0-8]-*.conf
 %{prometheus_base}/02-formatting.conf
 %{ruby_base}/*
