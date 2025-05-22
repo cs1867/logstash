@@ -41,35 +41,29 @@ jobs:
       - name: Download artifacts
         run: |
           mkdir -p artifacts
+          mkdir -p artifacts/RPMS
           echo "Downloading artifact for minor packages"
           echo "Run ID: 15175075108"
           artifact_path="artifacts/minor-packages/RPMS"
           gh run download 15175075108 --repo cs1867/minor-packages -D artifacts/minor-packages --name "minor-packages-${{ env.BUILD_OS }}"  
-          ls -al "$artifact_path"
+          cp "$artifact_path"/RPMS/*.rpm artifacts/RPMS
           artifact_path="artifacts/pscheduler"
           echo "Downloading artifact for pscheduler"
           echo "Run ID: 15175184702"
           gh run download 15175184702 --repo cs1867/pscheduler -D artifacts/pscheduler --name "pscheduler-${{ env.BUILD_OS }}"  
+          cp "$artifact_path"/RPMS/*.rpm artifacts/RPMS
           artifact_path="artifacts/perl-shared"
           echo "Downloading artifact for perl-shared"
           echo "Run ID: 15175323247"
           gh run download 15175323247 --repo cs1867/perl-shared -D artifacts/perl-shared --name "perl-shared-${{ env.BUILD_OS }}"  
+          cp "$artifact_path"/RPMS/*.rpm artifacts/RPMS
           artifact_path="artifacts/perl-shared"
           echo "Downloading artifact for psconfig"
           echo "Run ID: 15175328254"
           gh run download 15175328254 --repo cs1867/psconfig -D artifacts/psconfig --name "psconfig-${{ env.BUILD_OS }}"  
+          cp "$artifact_path"/RPMS/*.rpm artifacts/RPMS
           artifact_path="artifacts/psconfig"
           echo "Listing artifact path:"
-          case "${{ env.BUILD_OS }}" in
-            'ol8'|'el9')
-              mkdir -p artifacts/RPMS
-              echo "copy to the artifacts RPM dir"
-              cp "$artifact_path"/RPMS/*.rpm artifacts/RPMS
-            ;;
-              'd11'|'d12'|'u20'|'u22'|'u24')                
-               ls -al artifacts/*
-            ;;
-          esac
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
 
