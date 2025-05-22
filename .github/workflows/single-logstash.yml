@@ -60,6 +60,16 @@ jobs:
           artifact_path="artifacts/psconfig"
           echo "Listing artifact path:"
           ls -al "$artifact_path"
+          case "${{ env.BUILD_OS }}" in
+            'ol8'|'el9')
+              mkdir -p artifacts/RPMS
+              echo "copy to the artifacts RPM dir"
+              cp "$artifact_path"/RPMS/*.rpm artifacts/RPMS
+            ;;
+              'd11'|'d12'|'u20'|'u22'|'u24')                
+               ls -al artifacts/*
+            ;;
+          esac
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS }}
 
