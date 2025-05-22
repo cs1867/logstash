@@ -23,9 +23,11 @@ BuildRoot:		%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:		noarch
 Requires:       logstash-oss
 Requires:       perfsonar-common
+Requires:       java-11-openjdk-headless
 Requires:       perfsonar-logstash-output-plugin
 Requires(post): python3
 BuildRequires:  maven
+BuildRequires:  java-11-openjdk-devel
 %if 0%{?el7}
 Requires(post): python36-PyYAML
 %else
